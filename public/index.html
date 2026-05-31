@@ -1,4 +1,269 @@
 <!DOCTYPE html>
-<html><head><title>Metanek Panel</title>
-<script>window.location.href='https://metanek-panel.vercel.app';</script>
-</head><body>Cargando...</body></html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metanek — Panel de Control</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--bg2:#111118;--bg3:#1a1a24;--border:#2a2a38;--border2:#3a3a50;--text:#f0f0f8;--text2:#9090a8;--text3:#5a5a78;--accent:#6c63ff;--accent2:#4c45cc;--green:#22c55e;--green-bg:#0f2d1a;--red:#ef4444;--red-bg:#2d0f0f;--yellow:#f59e0b;--yellow-bg:#2d2000;--blue:#3b82f6;--blue-bg:#0f1d2d}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+#login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100}
+.login-box{width:380px;padding:2.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:16px}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:2rem}
+.login-logo-icon{width:42px;height:42px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.login-logo h1{font-size:22px;font-weight:600}
+.login-box label{font-size:12px;color:var(--text2);display:block;margin-bottom:6px;margin-top:1rem}
+.login-box input{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none}
+.login-btn{width:100%;margin-top:1.5rem;padding:12px;background:var(--accent);color:white;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer}
+.login-error{margin-top:10px;padding:8px 12px;background:var(--red-bg);border:1px solid var(--red);border-radius:6px;font-size:12px;color:var(--red);display:none}
+#app{display:none;min-height:100vh}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:50}
+.sidebar-logo{padding:1.25rem;border-bottom:1px solid var(--border)}
+.sidebar-nav{flex:1;padding:.75rem;display:flex;flex-direction:column;gap:2px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;transition:.15s;font-size:13px;color:var(--text2)}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:var(--accent);color:white}
+.nav-badge{margin-left:auto;font-size:10px;padding:2px 6px;border-radius:20px}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.badge-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.sidebar-footer{padding:1rem 1.25rem;border-top:1px solid var(--border)}
+.user-avatar{width:32px;height:32px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:white}
+.main{margin-left:220px;padding:1.5rem;min-height:100vh}
+.page{display:none}.page.active{display:block}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.topbar h1{font-size:20px;font-weight:600}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.metric-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem}
+.metric-label{font-size:11px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.metric-value{font-size:22px;font-weight:600;letter-spacing:-1px}
+.metric-up{color:var(--green)}.metric-down{color:var(--red)}.metric-warn{color:var(--yellow)}.metric-info{color:var(--blue)}
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+.card-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.card-btn{font-size:11px;padding:5px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer}
+.ventas-split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ventas-store{background:var(--bg3);border-radius:8px;padding:.875rem 1rem}
+.ventas-store h4{font-size:12px;font-weight:500;margin-bottom:.625rem;color:var(--text2)}
+.ventas-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.ventas-row span:first-child{font-size:11px;color:var(--text3)}
+.ventas-row span:last-child{font-size:12px;font-weight:500}
+.forecast-row{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-radius:7px;margin-bottom:5px}
+.fr-red{background:var(--red-bg)}.fr-yellow{background:var(--yellow-bg)}.fr-green{background:var(--green-bg)}.fr-blue{background:var(--blue-bg)}
+.platform-row{display:flex;align-items:center;padding:8px 10px;background:var(--bg3);border-radius:8px;margin-bottom:5px;gap:10px}
+.platform-name{font-size:12px;font-weight:500;flex:1}
+.status-pill{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500}
+.pill-green{background:var(--green-bg);color:var(--green)}.pill-red{background:var(--red-bg);color:var(--red)}.pill-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.cambio-item{padding:9px 12px;border-radius:8px;margin-bottom:6px;border-left:3px solid}
+.cambio-warn{background:var(--yellow-bg);border-color:var(--yellow)}
+.cambio-info{background:var(--blue-bg);border-color:var(--blue)}
+.site-metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.site-metric{background:var(--bg2);border-radius:6px;padding:6px 8px}
+.sm-label{font-size:10px;color:var(--text3);margin-bottom:2px}
+.sm-val{font-size:13px;font-weight:600}
+.loading{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);padding:1rem 0}
+.spinner{width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;max-width:300px;z-index:200;transform:translateY(100px);opacity:0;transition:.3s}
+.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:1rem}.metrics-grid{grid-template-columns:1fr 1fr}.cards-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">🏪</div>
+      <div><h1>Metanek</h1><span style="font-size:12px;color:var(--text2)">Panel empresarial</span></div>
+    </div>
+    <label>Correo</label>
+    <input type="email" id="login-email" value="gerencia@metanek.cl">
+    <label>Contraseña</label>
+    <input type="password" id="login-pass" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-error" id="login-error">Correo o contraseña incorrectos</div>
+    <button class="login-btn" onclick="doLogin()">Ingresar al panel</button>
+  </div>
+</div>
+<div id="app">
+  <nav class="sidebar">
+    <div class="sidebar-logo"><h2 style="font-size:16px;font-weight:600">🏪 Metanek</h2><span style="font-size:11px;color:var(--text3)">Panel de control</span></div>
+    <div class="sidebar-nav">
+      <div style="font-size:10px;color:var(--text3);padding:12px 12px 4px;text-transform:uppercase">Principal</div>
+      <div class="nav-item active" onclick="showPage('dashboard')"><span>📊</span> Dashboard</div>
+      <div style="font-size:10px;color:var(--text3);padding:12px 12px 4px;text-transform:uppercase">Operaciones</div>
+      <div class="nav-item" onclick="showPage('ventas')"><span>💰</span> Ventas</div>
+      <div class="nav-item" onclick="showPage('forecast')"><span>📦</span> Forecast<span class="nav-badge badge-red">38</span></div>
+      <div style="font-size:10px;color:var(--text3);padding:12px 12px 4px;text-transform:uppercase">Marketing</div>
+      <div class="nav-item" onclick="showPage('marketing')"><span>📣</span> Marketing<span class="nav-badge badge-red">!</span></div>
+      <div style="font-size:10px;color:var(--text3);padding:12px 12px 4px;text-transform:uppercase">E-commerce</div>
+      <div class="nav-item" onclick="showPage('ecommerce')"><span>🌐</span> Sitios web<span class="nav-badge badge-yellow">2</span></div>
+      <div class="nav-item" onclick="showPage('cambios')"><span>🔔</span> Cambios<span class="nav-badge badge-yellow">2</span></div>
+    </div>
+    <div class="sidebar-footer">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="user-avatar">R</div>
+        <div><p style="font-size:12px;font-weight:500;margin:0">Gerencia</p><span style="font-size:10px;color:var(--text3)">gerencia@metanek.cl</span></div>
+        <button onclick="doLogout()" style="margin-left:auto;background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px">⏻</button>
+      </div>
+    </div>
+  </nav>
+  <main class="main">
+    <div class="page active" id="page-dashboard">
+      <div class="topbar">
+        <div><h1>Dashboard</h1><p style="font-size:12px;color:var(--text3)" id="fecha-hoy"></p></div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)"><div style="width:7px;height:7px;border-radius:50%;background:var(--green)"></div> En línea</div>
+          <button style="padding:7px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer" onclick="loadData()">↻ Actualizar</button>
+        </div>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-card"><div class="metric-label">Ventas hoy — Metanek</div><div class="metric-value metric-up" id="m-venta-hoy-mn">—</div></div>
+        <div class="metric-card"><div class="metric-label">Ventas hoy — Metahome</div><div class="metric-value metric-up" id="m-venta-hoy-mh">—</div></div>
+        <div class="metric-card"><div class="metric-label">SKUs urgentes</div><div class="metric-value metric-down">38</div></div>
+        <div class="metric-card"><div class="metric-label">Alertas activas</div><div class="metric-value metric-warn">3</div></div>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:var(--green-bg);color:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center">💰</div> Ventas del mes</div><button class="card-btn" onclick="showPage('ventas')">Ver →</button></div>
+          <div class="ventas-split">
+            <div class="ventas-store"><h4>metanek.cl</h4><div class="ventas-row"><span>Este mes</span><span class="metric-up" id="v-mes-mn">—</span></div></div>
+            <div class="ventas-store"><h4>metahome.cl</h4><div class="ventas-row"><span>Este mes</span><span class="metric-up" id="v-mes-mh">—</span></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:#1a1030;color:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center">📦</div> Forecast</div><button class="card-btn" onclick="showPage('forecast')">Ver →</button></div>
+          <div class="forecast-row fr-red"><span style="color:var(--red);font-size:12px">🔴 Comprar urgente</span><span style="color:var(--red);font-weight:600">38</span></div>
+          <div class="forecast-row fr-yellow"><span style="color:var(--yellow);font-size:12px">🟡 Revisar</span><span style="color:var(--yellow);font-weight:600">15</span></div>
+          <div class="forecast-row fr-green"><span style="color:var(--green);font-size:12px">🟢 OK</span><span style="color:var(--green);font-weight:600">149</span></div>
+          <div class="forecast-row fr-blue"><span style="color:var(--blue);font-size:12px">🏭 Fabricación</span><span style="color:var(--blue);font-weight:600">72</span></div>
+        </div>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:var(--blue-bg);color:var(--blue);border-radius:6px;display:flex;align-items:center;justify-content:center">📣</div> Marketing</div><button class="card-btn" onclick="showPage('marketing')">Ver →</button></div>
+          <div class="platform-row"><div style="width:28px;height:28px;background:#1a2a1a;color:#34a853;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700">G</div><span class="platform-name">Google Ads</span><span class="status-pill pill-green">Activo</span></div>
+          <div class="platform-row"><div style="width:28px;height:28px;background:#1a1a2d;color:#1877f2;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700">f</div><span class="platform-name">Meta Ads</span><span class="status-pill pill-green">Activo</span></div>
+          <div class="platform-row"><div style="width:28px;height:28px;background:#2d1a1a;color:#fe2c55;border-radius:6px;display:flex;align-items:center;justify-content:center">♪</div><span class="platform-name">TikTok Ads</span><span class="status-pill pill-red">⚠ Pago</span></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:var(--yellow-bg);color:var(--yellow);border-radius:6px;display:flex;align-items:center;justify-content:center">🔔</div> Cambios web</div><button class="card-btn" onclick="showPage('cambios')">Ver →</button></div>
+          <div class="cambio-item cambio-warn"><div style="display:flex;justify-content:space-between"><span style="font-size:12px;font-weight:500;color:var(--yellow)">metahome.cl — Inicio</span><span style="font-size:10px;color:var(--text3)">Hoy 10:42</span></div><div style="font-size:11px;color:var(--text2)">Banner modificado</div></div>
+          <div class="cambio-item cambio-info"><div style="display:flex;justify-content:space-between"><span style="font-size:12px;font-weight:500;color:var(--blue)">metanek.cl — SKU 1040213</span><span style="font-size:10px;color:var(--text3)">Ayer 16:15</span></div><div style="font-size:11px;color:var(--text2)">Descripción actualizada</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="page" id="page-ventas">
+      <div class="topbar"><h1>Ventas</h1><button style="padding:7px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer" onclick="loadData()">↻ Shopify</button></div>
+      <div class="metrics-grid">
+        <div class="metric-card"><div class="metric-label">Hoy — Metanek</div><div class="metric-value metric-up" id="vp-hoy-mn">—</div></div>
+        <div class="metric-card"><div class="metric-label">Este mes — Metanek</div><div class="metric-value metric-up" id="vp-mes-mn">—</div></div>
+        <div class="metric-card"><div class="metric-label">Hoy — Metahome</div><div class="metric-value metric-up" id="vp-hoy-mh">—</div></div>
+        <div class="metric-card"><div class="metric-label">Este mes — Metahome</div><div class="metric-value metric-up" id="vp-mes-mh">—</div></div>
+      </div>
+    </div>
+    <div class="page" id="page-forecast">
+      <div class="topbar"><h1>Forecast</h1><button class="card-btn" onclick="window.open('https://drive.google.com/drive/folders/1QqIes3zv4bckRyEfaSooZBuGrHUow1JL','_blank')">📂 Drive →</button></div>
+      <div class="metrics-grid">
+        <div class="metric-card"><div class="metric-label">Urgente</div><div class="metric-value metric-down">38</div></div>
+        <div class="metric-card"><div class="metric-label">Revisar</div><div class="metric-value metric-warn">15</div></div>
+        <div class="metric-card"><div class="metric-label">OK</div><div class="metric-value metric-up">149</div></div>
+        <div class="metric-card"><div class="metric-label">Fabricación</div><div class="metric-value metric-info">72</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📦 Resumen por categoría</div></div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead><tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:8px;color:var(--text3)">Categoría</th><th style="text-align:center;padding:8px;color:var(--red)">Urgente</th><th style="text-align:center;padding:8px;color:var(--yellow)">Revisar</th><th style="text-align:center;padding:8px;color:var(--green)">OK</th><th style="text-align:center;padding:8px;color:var(--blue)">Fab.</th></tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">🗑 Basureros</td><td style="text-align:center;color:var(--red)">8</td><td style="text-align:center;color:var(--yellow)">4</td><td style="text-align:center;color:var(--green)">30</td><td style="text-align:center;color:var(--blue)">18</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">🗄 Estanterías</td><td style="text-align:center;color:var(--red)">3</td><td style="text-align:center;color:var(--yellow)">2</td><td style="text-align:center;color:var(--green)">5</td><td style="text-align:center;color:var(--blue)">5</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">🔒 Casilleros</td><td style="text-align:center;color:var(--red)">10</td><td style="text-align:center;color:var(--yellow)">4</td><td style="text-align:center;color:var(--green)">27</td><td style="text-align:center;color:var(--blue)">12</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">🏠 Bodegas</td><td style="text-align:center;color:var(--red)">5</td><td style="text-align:center;color:var(--yellow)">2</td><td style="text-align:center;color:var(--green)">17</td><td style="text-align:center;color:var(--blue)">4</td></tr>
+            <tr><td style="padding:8px">🛠 Otros</td><td style="text-align:center;color:var(--red)">12</td><td style="text-align:center;color:var(--yellow)">3</td><td style="text-align:center;color:var(--green)">70</td><td style="text-align:center;color:var(--blue)">33</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="page" id="page-marketing">
+      <div class="topbar"><h1>Marketing</h1></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-header"><div class="card-title">Google Ads — Metanek</div><span class="status-pill pill-green">Activo</span></div><div class="metrics-grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:0"><div class="metric-card" style="padding:.75rem"><div class="metric-label">Hoy</div><div class="metric-value" style="font-size:16px">$12.400</div></div><div class="metric-card" style="padding:.75rem"><div class="metric-label">Mes</div><div class="metric-value" style="font-size:16px">$180k</div></div><div class="metric-card" style="padding:.75rem"><div class="metric-label">Budget</div><div class="metric-value" style="font-size:16px">$250k</div></div></div></div>
+        <div class="card"><div class="card-header"><div class="card-title">Meta Ads — Metanek</div><span class="status-pill pill-green">Activo</span></div><div class="metrics-grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:0"><div class="metric-card" style="padding:.75rem"><div class="metric-label">Hoy</div><div class="metric-value" style="font-size:16px">$8.200</div></div><div class="metric-card" style="padding:.75rem"><div class="metric-label">Mes</div><div class="metric-value" style="font-size:16px">$95k</div></div><div class="metric-card" style="padding:.75rem"><div class="metric-label">Budget</div><div class="metric-value" style="font-size:16px">$150k</div></div></div></div>
+        <div class="card" style="border-color:var(--red)"><div class="card-header"><div class="card-title">TikTok Ads — Metahome</div><span class="status-pill pill-red">⚠ Pago pendiente</span></div><div style="padding:8px 10px;background:var(--red-bg);border-radius:8px;margin-bottom:10px"><p style="font-size:12px;color:var(--red);margin:0">Campañas pausadas por pago pendiente.</p></div></div>
+        <div class="card"><div class="card-header"><div class="card-title">Klaviyo — Metahome</div><span class="status-pill pill-green">Activo</span></div><div class="metrics-grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:0"><div class="metric-card" style="padding:.75rem"><div class="metric-label">Enviados</div><div class="metric-value" style="font-size:16px">1.240</div></div><div class="metric-card" style="padding:.75rem"><div class="metric-label">Apertura</div><div class="metric-value" style="font-size:16px">24.3%</div></div><div class="metric-card" style="padding:.75rem"><div class="metric-label">Conversión</div><div class="metric-value" style="font-size:16px">3.1%</div></div></div></div>
+      </div>
+    </div>
+    <div class="page" id="page-ecommerce">
+      <div class="topbar"><h1>Sitios web</h1></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-header"><div class="card-title">🌐 metanek.cl</div><span class="status-pill pill-green">Online</span></div><div class="site-metrics" style="margin-bottom:10px"><div class="site-metric"><div class="sm-label">Velocidad</div><div class="sm-val metric-warn">2.8s</div></div><div class="site-metric"><div class="sm-label">SEO</div><div class="sm-val metric-up">84/100</div></div><div class="site-metric"><div class="sm-label">Mobile</div><div class="sm-val metric-up">91/100</div></div><div class="site-metric"><div class="sm-label">Productos</div><div class="sm-val">202</div></div></div><button class="card-btn" style="width:100%" onclick="window.open('https://www.metanek.cl','_blank')">Abrir →</button></div>
+        <div class="card"><div class="card-header"><div class="card-title">🌐 metahome.cl</div><span class="status-pill pill-yellow">Lento</span></div><div class="site-metrics" style="margin-bottom:10px"><div class="site-metric"><div class="sm-label">Velocidad</div><div class="sm-val metric-down">4.1s</div></div><div class="site-metric"><div class="sm-label">SEO</div><div class="sm-val metric-warn">71/100</div></div><div class="site-metric"><div class="sm-label">Mobile</div><div class="sm-val metric-warn">78/100</div></div><div class="site-metric"><div class="sm-label">Productos</div><div class="sm-val">—</div></div></div><button class="card-btn" style="width:100%" onclick="window.open('https://www.metahome.cl','_blank')">Abrir →</button></div>
+      </div>
+    </div>
+    <div class="page" id="page-cambios">
+      <div class="topbar"><h1>Cambios en sitios web</h1><div style="display:flex;gap:8px"><span class="status-pill pill-green">✓ Email</span><span class="status-pill pill-green">✓ WhatsApp</span></div></div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📋 Historial</div></div>
+        <div class="cambio-item cambio-warn"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500;color:var(--yellow)">metahome.cl — Inicio</span><span style="font-size:10px;color:var(--text3)">Hoy 10:42</span></div><div style="font-size:11px;color:var(--text2)">Banner modificado · agencia@marketing.cl</div></div>
+        <div class="cambio-item cambio-info"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500;color:var(--blue)">metanek.cl — SKU 1040213</span><span style="font-size:10px;color:var(--text3)">Ayer 16:15</span></div><div style="font-size:11px;color:var(--text2)">Descripción actualizada · agencia@marketing.cl</div></div>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast"><div id="toast-title" style="font-size:12px;font-weight:500;margin-bottom:3px"></div><div id="toast-msg" style="font-size:11px;color:var(--text2)"></div></div>
+<script>
+const USER='gerencia@metanek.cl',PASS='metanek2026';
+function doLogin(){
+  const e=document.getElementById('login-email').value;
+  const p=document.getElementById('login-pass').value;
+  if(e===USER&&p===PASS){document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';initApp();}
+  else{document.getElementById('login-error').style.display='block';}
+}
+function doLogout(){document.getElementById('app').style.display='none';document.getElementById('login-screen').style.display='flex';}
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'"))n.classList.add('active');});
+  if(id==='ventas')loadData();
+}
+function fmt(n){return '$'+Math.round(n).toLocaleString('es-CL');}
+function showToast(t,m){const toast=document.getElementById('toast');document.getElementById('toast-title').textContent=t;document.getElementById('toast-msg').textContent=m;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),3500);}
+async function fetchShopify(shop,endpoint){try{const r=await fetch('/api/shopify?shop='+shop+'&endpoint='+endpoint);return await r.json();}catch(e){return null;}}
+async function loadData(){
+  showToast('Actualizando','Conectando con Shopify...');
+  const today=new Date();
+  const startOfDay=new Date(today.getFullYear(),today.getMonth(),today.getDate()).toISOString();
+  const startOfMonth=new Date(today.getFullYear(),today.getMonth(),1).toISOString();
+  try{
+    const[mnHoy,mnMes,mhHoy,mhMes]=await Promise.all([
+      fetchShopify('metanek','orders.json?status=any&created_at_min='+startOfDay+'&fields=total_price'),
+      fetchShopify('metanek','orders.json?status=any&created_at_min='+startOfMonth+'&fields=total_price&limit=250'),
+      fetchShopify('metahome','orders.json?status=any&created_at_min='+startOfDay+'&fields=total_price'),
+      fetchShopify('metahome','orders.json?status=any&created_at_min='+startOfMonth+'&fields=total_price&limit=250')
+    ]);
+    const sum=arr=>(arr?.orders||[]).reduce((s,o)=>s+parseFloat(o.total_price||0),0);
+    const mnH=sum(mnHoy),mnM=sum(mnMes),mhH=sum(mhHoy),mhM=sum(mhMes);
+    document.getElementById('m-venta-hoy-mn').textContent=fmt(mnH);
+    document.getElementById('m-venta-hoy-mh').textContent=mhH>0?fmt(mhH):'—';
+    document.getElementById('v-mes-mn').textContent=fmt(mnM);
+    document.getElementById('v-mes-mh').textContent=mhM>0?fmt(mhM):'—';
+    document.getElementById('vp-hoy-mn').textContent=fmt(mnH);
+    document.getElementById('vp-mes-mn').textContent=fmt(mnM);
+    document.getElementById('vp-hoy-mh').textContent=mhH>0?fmt(mhH):'—';
+    document.getElementById('vp-mes-mh').textContent=mhM>0?fmt(mhM):'—';
+    showToast('✅ Actualizado','Shopify conectado');
+  }catch(e){showToast('⚠ Error','No se pudo conectar');}
+}
+function initApp(){
+  const now=new Date();
+  const dias=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  document.getElementById('fecha-hoy').textContent=dias[now.getDay()]+' '+now.getDate()+' de '+meses[now.getMonth()]+' '+now.getFullYear();
+  loadData();
+  showToast('Bienvenido','Panel cargado correctamente');
+}
+</script>
+</body>
+</html>
