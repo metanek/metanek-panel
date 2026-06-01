@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Metanek â Panel de Control</title>
+<title>Metanek Ã¢ÂÂ Panel de Control</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -73,43 +73,64 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .mkt-tab{padding:8px 14px;font-size:12px;cursor:pointer;border:none;background:none;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:'DM Sans',sans-serif}
 .mkt-tab.active{color:var(--text);border-bottom:2px solid var(--accent);font-weight:500}
 .mkt-tab:hover{color:var(--text)}
+
+.report-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:1rem}
+.report-modal.open{display:flex}
+.report-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:700px;margin:auto;padding:0;overflow:hidden}
+.report-hdr{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--border)}
+.report-hdr h2{font-size:16px;font-weight:600}
+.report-close{background:none;border:none;color:var(--text2);cursor:pointer;font-size:20px;line-height:1}
+.report-body{padding:1.5rem;min-height:300px}
+.report-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem;gap:1rem;color:var(--text2);font-size:14px}
+.report-content{font-size:13px;line-height:1.7;color:var(--text)}
+.report-content h3{font-size:15px;font-weight:600;margin:1.5rem 0 .5rem;color:var(--text)}
+.report-content h4{font-size:13px;font-weight:600;margin:1rem 0 .25rem;color:var(--text2)}
+.report-content ul{padding-left:1.25rem;margin:.5rem 0}
+.report-content li{margin:.25rem 0}
+.report-content strong{color:var(--text)}
+.report-content .alert-red{color:var(--red);font-weight:500}
+.report-content .alert-yellow{color:var(--yellow);font-weight:500}
+.report-content .alert-green{color:var(--green);font-weight:500}
+.report-ftr{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+.report-print-btn{padding:8px 16px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px}
+.report-copy-btn{padding:8px 16px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;cursor:pointer;font-size:13px}
 </style>
 </head>
 <body>
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">
-      <div class="login-logo-icon">ðª</div>
+      <div class="login-logo-icon">Ã°ÂÂÂª</div>
       <div><h1>Metanek</h1><span style="font-size:12px;color:var(--text2)">Panel empresarial</span></div>
     </div>
     <label>Correo</label>
     <input type="email" id="login-email" value="gerencia@metanek.cl">
-    <label>ContraseÃ±a</label>
+    <label>ContraseÃÂ±a</label>
     <input type="password" id="login-pass" onkeydown="if(event.key==='Enter')doLogin()">
-    <div class="login-error" id="login-error">Correo o contraseÃ±a incorrectos</div>
+    <div class="login-error" id="login-error">Correo o contraseÃÂ±a incorrectos</div>
     <button class="login-btn" onclick="doLogin()">Ingresar al panel</button>
   </div>
 </div>
 <div id="app">
   <nav class="sidebar">
-    <div class="sidebar-logo"><h2 style="font-size:16px;font-weight:600">ðª Metanek</h2><span style="font-size:11px;color:var(--text3)">Panel de control</span></div>
+    <div class="sidebar-logo"><h2 style="font-size:16px;font-weight:600">Ã°ÂÂÂª Metanek</h2><span style="font-size:11px;color:var(--text3)">Panel de control</span></div>
     <div class="sidebar-nav">
       <div style="font-size:10px;color:var(--text3);padding:12px 12px 4px;text-transform:uppercase">Principal</div>
-      <div class="nav-item active" onclick="showPage('dashboard')"><span>ð</span> Dashboard</div>
+      <div class="nav-item active" onclick="showPage('dashboard')"><span>Ã°ÂÂÂ</span> Dashboard</div>
       <div style="font-size:10px;color:var(--text3);padding:12px 12px 4px;text-transform:uppercase">Operaciones</div>
-      <div class="nav-item" onclick="showPage('ventas')"><span>ð°</span> Ventas</div>
-      <div class="nav-item" onclick="showPage('forecast')"><span>ð¦</span> Forecast<span class="nav-badge badge-red">38</span></div>
+      <div class="nav-item" onclick="showPage('ventas')"><span>Ã°ÂÂÂ°</span> Ventas</div>
+      <div class="nav-item" onclick="showPage('forecast')"><span>Ã°ÂÂÂ¦</span> Forecast<span class="nav-badge badge-red">38</span></div>
       <div style="font-size:10px;color:var(--text3);padding:12px 12px 4px;text-transform:uppercase">Marketing</div>
-      <div class="nav-item" onclick="showPage('marketing')"><span>ð£</span> Marketing<span class="nav-badge badge-red">!</span></div>
+      <div class="nav-item" onclick="showPage('marketing')"><span>Ã°ÂÂÂ£</span> Marketing<span class="nav-badge badge-red">!</span></div>
       <div style="font-size:10px;color:var(--text3);padding:12px 12px 4px;text-transform:uppercase">E-commerce</div>
-      <div class="nav-item" onclick="showPage('ecommerce')"><span>ð</span> Sitios web<span class="nav-badge badge-yellow">2</span></div>
-      <div class="nav-item" onclick="showPage('cambios')"><span>ð</span> Cambios<span class="nav-badge badge-yellow">2</span></div>
+      <div class="nav-item" onclick="showPage('ecommerce')"><span>Ã°ÂÂÂ</span> Sitios web<span class="nav-badge badge-yellow">2</span></div>
+      <div class="nav-item" onclick="showPage('cambios')"><span>Ã°ÂÂÂ</span> Cambios<span class="nav-badge badge-yellow">2</span></div>
     </div>
     <div class="sidebar-footer">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="user-avatar">R</div>
         <div><p style="font-size:12px;font-weight:500;margin:0">Gerencia</p><span style="font-size:10px;color:var(--text3)">gerencia@metanek.cl</span></div>
-        <button onclick="doLogout()" style="margin-left:auto;background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px">â»</button>
+        <button onclick="doLogout()" style="margin-left:auto;background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px">Ã¢ÂÂ»</button>
       </div>
     </div>
   </nav>
@@ -118,73 +139,73 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="topbar">
         <div><h1>Dashboard</h1><p style="font-size:12px;color:var(--text3)" id="fecha-hoy"></p></div>
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)"><div style="width:7px;height:7px;border-radius:50%;background:var(--green)"></div> En lÃ­nea</div>
-          <button style="padding:7px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer" onclick="loadData()">â» Actualizar</button>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)"><div style="width:7px;height:7px;border-radius:50%;background:var(--green)"></div> En lÃÂ­nea</div>
+          <button style="padding:7px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer" onclick="loadData()">Ã¢ÂÂ» Actualizar</button>
         </div>
       </div>
       <div class="metrics-grid">
-        <div class="metric-card"><div class="metric-label">Ventas hoy â Metanek</div><div class="metric-value metric-up" id="m-venta-hoy-mn">â</div></div>
-        <div class="metric-card"><div class="metric-label">Ventas hoy â Metahome</div><div class="metric-value metric-up" id="m-venta-hoy-mh">â</div></div>
+        <div class="metric-card"><div class="metric-label">Ventas hoy Ã¢ÂÂ Metanek</div><div class="metric-value metric-up" id="m-venta-hoy-mn">Ã¢ÂÂ</div></div>
+        <div class="metric-card"><div class="metric-label">Ventas hoy Ã¢ÂÂ Metahome</div><div class="metric-value metric-up" id="m-venta-hoy-mh">Ã¢ÂÂ</div></div>
         <div class="metric-card"><div class="metric-label">SKUs urgentes</div><div class="metric-value metric-down">38</div></div>
         <div class="metric-card"><div class="metric-label">Alertas activas</div><div class="metric-value metric-warn">3</div></div>
       </div>
       <div class="cards-grid">
         <div class="card">
-          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:var(--green-bg);color:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center">ð°</div> Ventas del mes</div><button class="card-btn" onclick="showPage('ventas')">Ver â</button></div>
+          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:var(--green-bg);color:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center">Ã°ÂÂÂ°</div> Ventas del mes</div><button class="card-btn" onclick="showPage('ventas')">Ver Ã¢ÂÂ</button></div>
           <div class="ventas-split">
-            <div class="ventas-store"><h4>metanek.cl</h4><div class="ventas-row"><span>Este mes</span><span class="metric-up" id="v-mes-mn">â</span></div></div>
-            <div class="ventas-store"><h4>metahome.cl</h4><div class="ventas-row"><span>Este mes</span><span class="metric-up" id="v-mes-mh">â</span></div></div>
+            <div class="ventas-store"><h4>metanek.cl</h4><div class="ventas-row"><span>Este mes</span><span class="metric-up" id="v-mes-mn">Ã¢ÂÂ</span></div></div>
+            <div class="ventas-store"><h4>metahome.cl</h4><div class="ventas-row"><span>Este mes</span><span class="metric-up" id="v-mes-mh">Ã¢ÂÂ</span></div></div>
           </div>
         </div>
         <div class="card">
-          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:#1a1030;color:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center">ð¦</div> Forecast</div><button class="card-btn" onclick="showPage('forecast')">Ver â</button></div>
-          <div class="forecast-row fr-red"><span style="color:var(--red);font-size:12px">ð´ Comprar urgente</span><span style="color:var(--red);font-weight:600">38</span></div>
-          <div class="forecast-row fr-yellow"><span style="color:var(--yellow);font-size:12px">ð¡ Revisar</span><span style="color:var(--yellow);font-weight:600">15</span></div>
-          <div class="forecast-row fr-green"><span style="color:var(--green);font-size:12px">ð¢ OK</span><span style="color:var(--green);font-weight:600">149</span></div>
-          <div class="forecast-row fr-blue"><span style="color:var(--blue);font-size:12px">ð­ FabricaciÃ³n</span><span style="color:var(--blue);font-weight:600">72</span></div>
+          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:#1a1030;color:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center">Ã°ÂÂÂ¦</div> Forecast</div><button class="card-btn" onclick="showPage('forecast')">Ver Ã¢ÂÂ</button></div>
+          <div class="forecast-row fr-red"><span style="color:var(--red);font-size:12px">Ã°ÂÂÂ´ Comprar urgente</span><span style="color:var(--red);font-weight:600">38</span></div>
+          <div class="forecast-row fr-yellow"><span style="color:var(--yellow);font-size:12px">Ã°ÂÂÂ¡ Revisar</span><span style="color:var(--yellow);font-weight:600">15</span></div>
+          <div class="forecast-row fr-green"><span style="color:var(--green);font-size:12px">Ã°ÂÂÂ¢ OK</span><span style="color:var(--green);font-weight:600">149</span></div>
+          <div class="forecast-row fr-blue"><span style="color:var(--blue);font-size:12px">Ã°ÂÂÂ­ FabricaciÃÂ³n</span><span style="color:var(--blue);font-weight:600">72</span></div>
         </div>
       </div>
       <div class="cards-grid">
         <div class="card">
-          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:var(--blue-bg);color:var(--blue);border-radius:6px;display:flex;align-items:center;justify-content:center">ð£</div> Marketing</div><button class="card-btn" onclick="showPage('marketing')">Ver â</button></div>
+          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:var(--blue-bg);color:var(--blue);border-radius:6px;display:flex;align-items:center;justify-content:center">Ã°ÂÂÂ£</div> Marketing</div><button class="card-btn" onclick="showPage('marketing')">Ver Ã¢ÂÂ</button></div>
           <div class="platform-row"><div style="width:28px;height:28px;background:#1a2a1a;color:#34a853;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700">G</div><span class="platform-name">Google Ads</span><span class="status-pill pill-green">Activo</span></div>
           <div class="platform-row"><div style="width:28px;height:28px;background:#1a1a2d;color:#1877f2;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700">f</div><span class="platform-name">Meta Ads</span><span class="status-pill pill-green">Activo</span></div>
-          <div class="platform-row"><div style="width:28px;height:28px;background:#2d1a1a;color:#fe2c55;border-radius:6px;display:flex;align-items:center;justify-content:center">âª</div><span class="platform-name">TikTok Ads</span><span class="status-pill pill-red">â  Pago</span></div>
+          <div class="platform-row"><div style="width:28px;height:28px;background:#2d1a1a;color:#fe2c55;border-radius:6px;display:flex;align-items:center;justify-content:center">Ã¢ÂÂª</div><span class="platform-name">TikTok Ads</span><span class="status-pill pill-red">Ã¢ÂÂ  Pago</span></div>
         </div>
         <div class="card">
-          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:var(--yellow-bg);color:var(--yellow);border-radius:6px;display:flex;align-items:center;justify-content:center">ð</div> Cambios web</div><button class="card-btn" onclick="showPage('cambios')">Ver â</button></div>
-          <div class="cambio-item cambio-warn"><div style="display:flex;justify-content:space-between"><span style="font-size:12px;font-weight:500;color:var(--yellow)">metahome.cl â Inicio</span><span style="font-size:10px;color:var(--text3)">Hoy 10:42</span></div><div style="font-size:11px;color:var(--text2)">Banner modificado</div></div>
-          <div class="cambio-item cambio-info"><div style="display:flex;justify-content:space-between"><span style="font-size:12px;font-weight:500;color:var(--blue)">metanek.cl â SKU 1040213</span><span style="font-size:10px;color:var(--text3)">Ayer 16:15</span></div><div style="font-size:11px;color:var(--text2)">DescripciÃ³n actualizada</div></div>
+          <div class="card-header"><div class="card-title"><div style="width:28px;height:28px;background:var(--yellow-bg);color:var(--yellow);border-radius:6px;display:flex;align-items:center;justify-content:center">Ã°ÂÂÂ</div> Cambios web</div><button class="card-btn" onclick="showPage('cambios')">Ver Ã¢ÂÂ</button></div>
+          <div class="cambio-item cambio-warn"><div style="display:flex;justify-content:space-between"><span style="font-size:12px;font-weight:500;color:var(--yellow)">metahome.cl Ã¢ÂÂ Inicio</span><span style="font-size:10px;color:var(--text3)">Hoy 10:42</span></div><div style="font-size:11px;color:var(--text2)">Banner modificado</div></div>
+          <div class="cambio-item cambio-info"><div style="display:flex;justify-content:space-between"><span style="font-size:12px;font-weight:500;color:var(--blue)">metanek.cl Ã¢ÂÂ SKU 1040213</span><span style="font-size:10px;color:var(--text3)">Ayer 16:15</span></div><div style="font-size:11px;color:var(--text2)">DescripciÃÂ³n actualizada</div></div>
         </div>
       </div>
     </div>
     <div class="page" id="page-ventas">
-      <div class="topbar"><h1>Ventas</h1><button style="padding:7px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer" onclick="loadData()">â» Shopify</button></div>
+      <div class="topbar"><h1>Ventas</h1><button style="padding:7px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer" onclick="loadData()">Ã¢ÂÂ» Shopify</button></div>
       <div class="metrics-grid">
-        <div class="metric-card"><div class="metric-label">Hoy â Metanek</div><div class="metric-value metric-up" id="vp-hoy-mn">â</div></div>
-        <div class="metric-card"><div class="metric-label">Este mes â Metanek</div><div class="metric-value metric-up" id="vp-mes-mn">â</div></div>
-        <div class="metric-card"><div class="metric-label">Hoy â Metahome</div><div class="metric-value metric-up" id="vp-hoy-mh">â</div></div>
-        <div class="metric-card"><div class="metric-label">Este mes â Metahome</div><div class="metric-value metric-up" id="vp-mes-mh">â</div></div>
+        <div class="metric-card"><div class="metric-label">Hoy Ã¢ÂÂ Metanek</div><div class="metric-value metric-up" id="vp-hoy-mn">Ã¢ÂÂ</div></div>
+        <div class="metric-card"><div class="metric-label">Este mes Ã¢ÂÂ Metanek</div><div class="metric-value metric-up" id="vp-mes-mn">Ã¢ÂÂ</div></div>
+        <div class="metric-card"><div class="metric-label">Hoy Ã¢ÂÂ Metahome</div><div class="metric-value metric-up" id="vp-hoy-mh">Ã¢ÂÂ</div></div>
+        <div class="metric-card"><div class="metric-label">Este mes Ã¢ÂÂ Metahome</div><div class="metric-value metric-up" id="vp-mes-mh">Ã¢ÂÂ</div></div>
       </div>
     </div>
     <div class="page" id="page-forecast">
-      <div class="topbar"><h1>Forecast</h1><button class="card-btn" onclick="window.open('https://drive.google.com/drive/folders/1QqIes3zv4bckRyEfaSooZBuGrHUow1JL','_blank')">ð Drive â</button></div>
+      <div class="topbar"><h1>Forecast</h1><button class="card-btn" onclick="window.open('https://drive.google.com/drive/folders/1QqIes3zv4bckRyEfaSooZBuGrHUow1JL','_blank')">Ã°ÂÂÂ Drive Ã¢ÂÂ</button></div>
       <div class="metrics-grid">
         <div class="metric-card"><div class="metric-label">Urgente</div><div class="metric-value metric-down">38</div></div>
         <div class="metric-card"><div class="metric-label">Revisar</div><div class="metric-value metric-warn">15</div></div>
         <div class="metric-card"><div class="metric-label">OK</div><div class="metric-value metric-up">149</div></div>
-        <div class="metric-card"><div class="metric-label">FabricaciÃ³n</div><div class="metric-value metric-info">72</div></div>
+        <div class="metric-card"><div class="metric-label">FabricaciÃÂ³n</div><div class="metric-value metric-info">72</div></div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">ð¦ Resumen por categorÃ­a</div></div>
+        <div class="card-header"><div class="card-title">Ã°ÂÂÂ¦ Resumen por categorÃÂ­a</div></div>
         <table style="width:100%;border-collapse:collapse;font-size:12px">
-          <thead><tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:8px;color:var(--text3)">CategorÃ­a</th><th style="text-align:center;padding:8px;color:var(--red)">Urgente</th><th style="text-align:center;padding:8px;color:var(--yellow)">Revisar</th><th style="text-align:center;padding:8px;color:var(--green)">OK</th><th style="text-align:center;padding:8px;color:var(--blue)">Fab.</th></tr></thead>
+          <thead><tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:8px;color:var(--text3)">CategorÃÂ­a</th><th style="text-align:center;padding:8px;color:var(--red)">Urgente</th><th style="text-align:center;padding:8px;color:var(--yellow)">Revisar</th><th style="text-align:center;padding:8px;color:var(--green)">OK</th><th style="text-align:center;padding:8px;color:var(--blue)">Fab.</th></tr></thead>
           <tbody>
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">ð Basureros</td><td style="text-align:center;color:var(--red)">8</td><td style="text-align:center;color:var(--yellow)">4</td><td style="text-align:center;color:var(--green)">30</td><td style="text-align:center;color:var(--blue)">18</td></tr>
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">ð EstanterÃ­as</td><td style="text-align:center;color:var(--red)">3</td><td style="text-align:center;color:var(--yellow)">2</td><td style="text-align:center;color:var(--green)">5</td><td style="text-align:center;color:var(--blue)">5</td></tr>
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">ð Casilleros</td><td style="text-align:center;color:var(--red)">10</td><td style="text-align:center;color:var(--yellow)">4</td><td style="text-align:center;color:var(--green)">27</td><td style="text-align:center;color:var(--blue)">12</td></tr>
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">ð  Bodegas</td><td style="text-align:center;color:var(--red)">5</td><td style="text-align:center;color:var(--yellow)">2</td><td style="text-align:center;color:var(--green)">17</td><td style="text-align:center;color:var(--blue)">4</td></tr>
-            <tr><td style="padding:8px">ð  Otros</td><td style="text-align:center;color:var(--red)">12</td><td style="text-align:center;color:var(--yellow)">3</td><td style="text-align:center;color:var(--green)">70</td><td style="text-align:center;color:var(--blue)">33</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">Ã°ÂÂÂ Basureros</td><td style="text-align:center;color:var(--red)">8</td><td style="text-align:center;color:var(--yellow)">4</td><td style="text-align:center;color:var(--green)">30</td><td style="text-align:center;color:var(--blue)">18</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">Ã°ÂÂÂ EstanterÃÂ­as</td><td style="text-align:center;color:var(--red)">3</td><td style="text-align:center;color:var(--yellow)">2</td><td style="text-align:center;color:var(--green)">5</td><td style="text-align:center;color:var(--blue)">5</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">Ã°ÂÂÂ Casilleros</td><td style="text-align:center;color:var(--red)">10</td><td style="text-align:center;color:var(--yellow)">4</td><td style="text-align:center;color:var(--green)">27</td><td style="text-align:center;color:var(--blue)">12</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">Ã°ÂÂÂ  Bodegas</td><td style="text-align:center;color:var(--red)">5</td><td style="text-align:center;color:var(--yellow)">2</td><td style="text-align:center;color:var(--green)">17</td><td style="text-align:center;color:var(--blue)">4</td></tr>
+            <tr><td style="padding:8px">Ã°ÂÂÂ  Otros</td><td style="text-align:center;color:var(--red)">12</td><td style="text-align:center;color:var(--yellow)">3</td><td style="text-align:center;color:var(--green)">70</td><td style="text-align:center;color:var(--blue)">33</td></tr>
           </tbody>
         </table>
       </div>
@@ -207,22 +228,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <div class="metric-card"><div class="metric-label">CPC promedio</div><div class="metric-value">$4.37</div><div style="font-size:11px;color:var(--red);margin-top:4px">&#9660; $0.21 mejor</div></div>
         </div>
         <div class="card" style="margin-bottom:12px">
-          <div class="card-header"><div class="card-title">&#128221; Campañas activas</div><span style="font-size:10px;padding:3px 8px;background:var(--green-bg);color:var(--green);border-radius:20px">4 activas</span></div>
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Basureros — Search</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:78%;height:100%;background:#3b82f6;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$4.820</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">4.8x</span><span style="flex:0;font-size:14px">✅</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Estanterías — Shopping</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:55%;height:100%;background:#3b82f6;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$3.410</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">3.9x</span><span style="flex:0;font-size:14px">✅</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Casilleros — Display</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:32%;height:100%;background:#f59e0b;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$2.100</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">2.1x</span><span style="flex:0;font-size:14px">⚠</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Brand — Search</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:34%;height:100%;background:#3b82f6;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$2.070</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">6.1x</span><span style="flex:0;font-size:14px">✅</span></div>
+          <div class="card-header"><div class="card-title">&#128221; CampaÃ±as activas</div><span style="font-size:10px;padding:3px 8px;background:var(--green-bg);color:var(--green);border-radius:20px">4 activas</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Basureros â Search</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:78%;height:100%;background:#3b82f6;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$4.820</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">4.8x</span><span style="flex:0;font-size:14px">â</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">EstanterÃ­as â Shopping</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:55%;height:100%;background:#3b82f6;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$3.410</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">3.9x</span><span style="flex:0;font-size:14px">â</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Casilleros â Display</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:32%;height:100%;background:#f59e0b;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$2.100</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">2.1x</span><span style="flex:0;font-size:14px">â </span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Brand â Search</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:34%;height:100%;background:#3b82f6;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$2.070</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">6.1x</span><span style="flex:0;font-size:14px">â</span></div>
         </div>
         <div class="card" style="margin-bottom:12px">
           <div class="card-header"><div class="card-title">&#128197; Comparativo</div></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div style="background:var(--bg3);border-radius:8px;padding:.75rem"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Esta semana vs ant.</div><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:16px;font-weight:500">$28.400</span><span style="font-size:12px;color:var(--text2)">$24.800</span><span style="font-size:11px;padding:2px 6px;background:var(--green-bg);color:var(--green);border-radius:4px">▲ 14%</span></div></div><div style="background:var(--bg3);border-radius:8px;padding:.75rem"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Este mes vs ant.</div><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:16px;font-weight:500">$180k</span><span style="font-size:12px;color:var(--text2)">$161k</span><span style="font-size:11px;padding:2px 6px;background:var(--green-bg);color:var(--green);border-radius:4px">▲ 12%</span></div></div><div style="background:var(--bg3);border-radius:8px;padding:.75rem"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">ROAS semana</div><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:16px;font-weight:500">4.2x</span><span style="font-size:12px;color:var(--text2)">3.9x</span><span style="font-size:11px;padding:2px 6px;background:var(--green-bg);color:var(--green);border-radius:4px">▲ 8%</span></div></div><div style="background:var(--bg3);border-radius:8px;padding:.75rem"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">CPC semana</div><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:16px;font-weight:500">$4.37</span><span style="font-size:12px;color:var(--text2)">$4.58</span><span style="font-size:11px;padding:2px 6px;background:var(--green-bg);color:var(--green);border-radius:4px">▼ 5% mejor</span></div></div>
+            <div style="background:var(--bg3);border-radius:8px;padding:.75rem"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Esta semana vs ant.</div><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:16px;font-weight:500">$28.400</span><span style="font-size:12px;color:var(--text2)">$24.800</span><span style="font-size:11px;padding:2px 6px;background:var(--green-bg);color:var(--green);border-radius:4px">â² 14%</span></div></div><div style="background:var(--bg3);border-radius:8px;padding:.75rem"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Este mes vs ant.</div><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:16px;font-weight:500">$180k</span><span style="font-size:12px;color:var(--text2)">$161k</span><span style="font-size:11px;padding:2px 6px;background:var(--green-bg);color:var(--green);border-radius:4px">â² 12%</span></div></div><div style="background:var(--bg3);border-radius:8px;padding:.75rem"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">ROAS semana</div><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:16px;font-weight:500">4.2x</span><span style="font-size:12px;color:var(--text2)">3.9x</span><span style="font-size:11px;padding:2px 6px;background:var(--green-bg);color:var(--green);border-radius:4px">â² 8%</span></div></div><div style="background:var(--bg3);border-radius:8px;padding:.75rem"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">CPC semana</div><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:16px;font-weight:500">$4.37</span><span style="font-size:12px;color:var(--text2)">$4.58</span><span style="font-size:11px;padding:2px 6px;background:var(--green-bg);color:var(--green);border-radius:4px">â¼ 5% mejor</span></div></div>
           </div>
         </div>
         <div style="background:var(--bg3);border-radius:8px;padding:1rem;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; Análisis IA — Google Ads</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--green)">●</span> Brand tiene ROAS 6.1x — aumentar presupuesto 20-30% para capturar más volumen.</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--yellow)">●</span> Casilleros Display ROAS 2.1x bajo umbral. Revisar audiencias o redirigir a Search.</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--green)">●</span> CPC bajó $0.21 — mejora en Quality Score. Mantener estrategia actual.</div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; AnÃ¡lisis IA â Google Ads</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--green)">â</span> Brand tiene ROAS 6.1x â aumentar presupuesto 20-30% para capturar mÃ¡s volumen.</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--yellow)">â</span> Casilleros Display ROAS 2.1x bajo umbral. Revisar audiencias o redirigir a Search.</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--green)">â</span> CPC bajÃ³ $0.21 â mejora en Quality Score. Mantener estrategia actual.</div>
         </div>
-        <button onclick="if(window.showToast)showToast('Generando informe...','Conecta Supermetrics para datos reales')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">Generar informe completo Google Ads</button>
+        <button onclick="openReport('google')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">✨ Generar informe completo Google Ads</button>
       </div>
 
       <div id="mkt-meta" class="mkt-section" style="display:none">
@@ -230,28 +251,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <div class="metric-card"><div class="metric-label">Gasto hoy</div><div class="metric-value metric-down">$8.200</div><div style="font-size:11px;color:var(--text3);margin-top:4px">&#9660; 3% vs ayer</div></div>
           <div class="metric-card"><div class="metric-label">Gasto mes</div><div class="metric-value">$95k</div><div style="font-size:11px;color:var(--text3);margin-top:4px">&#9650; 7% vs mes ant.</div></div>
           <div class="metric-card"><div class="metric-label">ROAS</div><div class="metric-value metric-down">3.1x</div><div style="font-size:11px;color:var(--red);margin-top:4px">&#9660; 0.2x vs mes ant.</div></div>
-          <div class="metric-card"><div class="metric-label">Frecuencia</div><div class="metric-value metric-warn">2.4</div><div style="font-size:11px;color:var(--yellow);margin-top:4px">Cerca del límite</div></div>
+          <div class="metric-card"><div class="metric-label">Frecuencia</div><div class="metric-value metric-warn">2.4</div><div style="font-size:11px;color:var(--yellow);margin-top:4px">Cerca del lÃ­mite</div></div>
         </div>
         <div class="card" style="margin-bottom:12px">
-          <div class="card-header"><div class="card-title">&#128221; Campañas activas</div><span style="font-size:10px;padding:3px 8px;background:var(--green-bg);color:var(--green);border-radius:20px">3 activas</span></div>
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Catálogo — Retargeting</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:65%;height:100%;background:#6c63ff;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$3.900</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">4.2x</span><span style="flex:0;font-size:14px">✅</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Prospección — Lookalike</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:48%;height:100%;background:#f59e0b;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$2.800</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">2.4x</span><span style="flex:0;font-size:14px">⚠</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Awareness — Video</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:25%;height:100%;background:#6c63ff;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$1.500</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">Branding</span><span style="flex:0;font-size:14px">✅</span></div>
+          <div class="card-header"><div class="card-title">&#128221; CampaÃ±as activas</div><span style="font-size:10px;padding:3px 8px;background:var(--green-bg);color:var(--green);border-radius:20px">3 activas</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">CatÃ¡logo â Retargeting</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:65%;height:100%;background:#6c63ff;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$3.900</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">4.2x</span><span style="flex:0;font-size:14px">â</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">ProspecciÃ³n â Lookalike</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:48%;height:100%;background:#f59e0b;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$2.800</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">2.4x</span><span style="flex:0;font-size:14px">â </span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Awareness â Video</span><div style="flex:1;background:var(--bg3);border-radius:4px;height:5px;overflow:hidden"><div style="width:25%;height:100%;background:#6c63ff;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px;font-weight:500">$1.500</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">Branding</span><span style="flex:0;font-size:14px">â</span></div>
         </div>
         <div style="background:var(--bg3);border-radius:8px;padding:1rem;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; Análisis IA — Meta Ads</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--yellow)">●</span> Frecuencia 2.4 cerca del límite de fatiga (3.0). Rotar creatividades esta semana.</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--red)">●</span> ROAS bajó 0.2x y CPM subió $0.40 — posible aumento de competencia. Ampliar segmentación.</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--green)">●</span> Retargeting 4.2x ROAS — aumentar presupuesto y reducir Prospección temporalmente.</div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; AnÃ¡lisis IA â Meta Ads</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--yellow)">â</span> Frecuencia 2.4 cerca del lÃ­mite de fatiga (3.0). Rotar creatividades esta semana.</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--red)">â</span> ROAS bajÃ³ 0.2x y CPM subiÃ³ $0.40 â posible aumento de competencia. Ampliar segmentaciÃ³n.</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--green)">â</span> Retargeting 4.2x ROAS â aumentar presupuesto y reducir ProspecciÃ³n temporalmente.</div>
         </div>
-        <button onclick="if(window.showToast)showToast('Generando informe...','Conecta Supermetrics para datos reales')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">Generar informe completo Meta Ads</button>
+        <button onclick="openReport('meta')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">✨ Generar informe completo Meta Ads</button>
       </div>
 
       <div id="mkt-tiktok" class="mkt-section" style="display:none">
         <div class="card" style="border-color:var(--red);margin-bottom:12px">
-          <div class="card-header"><div class="card-title" style="color:var(--red)">⚠ Cuenta pausada — pago pendiente</div><span style="font-size:10px;padding:3px 8px;background:var(--red-bg);color:var(--red);border-radius:20px">Sin gasto</span></div>
-          <p style="font-size:13px;color:var(--text2)">Las campañas están pausadas. Actualiza el método de pago en TikTok Ads para reactivar.</p>
+          <div class="card-header"><div class="card-title" style="color:var(--red)">â  Cuenta pausada â pago pendiente</div><span style="font-size:10px;padding:3px 8px;background:var(--red-bg);color:var(--red);border-radius:20px">Sin gasto</span></div>
+          <p style="font-size:13px;color:var(--text2)">Las campaÃ±as estÃ¡n pausadas. Actualiza el mÃ©todo de pago en TikTok Ads para reactivar.</p>
         </div>
         <div class="card" style="margin-bottom:12px">
-          <div class="card-header"><div class="card-title">&#128337; Último mes activo</div></div>
+          <div class="card-header"><div class="card-title">&#128337; Ãltimo mes activo</div></div>
           <div class="metrics-grid" style="margin-bottom:0">
             <div class="metric-card"><div class="metric-label">Gasto total</div><div class="metric-value">$42k</div></div>
             <div class="metric-card"><div class="metric-label">ROAS</div><div class="metric-value">2.8x</div></div>
@@ -260,11 +281,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           </div>
         </div>
         <div style="background:var(--bg3);border-radius:8px;padding:1rem;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; Análisis IA — TikTok</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--red)">●</span> Urgente: cada día pausado pierde aprendizaje del algoritmo. Resolver pago hoy.</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--yellow)">●</span> Al reactivar, testear Spark Ads con contenido orgánico existente para mejorar ROAS.</div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; AnÃ¡lisis IA â TikTok</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--red)">â</span> Urgente: cada dÃ­a pausado pierde aprendizaje del algoritmo. Resolver pago hoy.</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--yellow)">â</span> Al reactivar, testear Spark Ads con contenido orgÃ¡nico existente para mejorar ROAS.</div>
         </div>
-        <button onclick="if(window.showToast)showToast('Generando plan...','Conecta Supermetrics para datos reales')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">Generar plan de reactivación TikTok</button>
+        <button onclick="if(window.showToast)showToast('Generando plan...','Conecta Supermetrics para datos reales')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">Generar plan de reactivaciÃ³n TikTok</button>
       </div>
 
       <div id="mkt-klaviyo" class="mkt-section" style="display:none">
@@ -279,12 +300,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Bienvenida</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">42.1% apertura</span><span style="flex:1;text-align:right;font-size:12px">6.2% clicks</span><span style="flex:0;font-size:12px;font-weight:500;color:var(--green)">Excelente</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Carrito abandonado</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">38.4% apertura</span><span style="flex:1;text-align:right;font-size:12px">8.1% clicks</span><span style="flex:0;font-size:12px;font-weight:500;color:var(--green)">Excelente</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Post-compra</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">28.7% apertura</span><span style="flex:1;text-align:right;font-size:12px">4.3% clicks</span><span style="flex:0;font-size:12px;font-weight:500;color:var(--green)">Bueno</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:12px">Win-back</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500">18.2% apertura</span><span style="flex:1;text-align:right;font-size:12px">2.1% clicks</span><span style="flex:0;font-size:12px;font-weight:500;color:var(--yellow)">Mejorar</span></div>
         </div>
         <div style="background:var(--bg3);border-radius:8px;padding:1rem;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; Análisis IA — Klaviyo</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--green)">●</span> Carrito abandonado y Bienvenida excelentes — no tocar, actualizar creatividades cada 90 días.</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--yellow)">●</span> Win-back 18.2% bajo. Segmentar por tiempo inactividad y personalizar asunto.</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--green)">●</span> Baja de lista 0.4% saludable — buen momento para aumentar frecuencia a 2x semana.</div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; AnÃ¡lisis IA â Klaviyo</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--green)">â</span> Carrito abandonado y Bienvenida excelentes â no tocar, actualizar creatividades cada 90 dÃ­as.</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--yellow)">â</span> Win-back 18.2% bajo. Segmentar por tiempo inactividad y personalizar asunto.</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--green)">â</span> Baja de lista 0.4% saludable â buen momento para aumentar frecuencia a 2x semana.</div>
         </div>
-        <button onclick="if(window.showToast)showToast('Generando informe...','Conecta Supermetrics para datos reales')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">Generar informe completo Klaviyo</button>
+        <button onclick="openReport('klaviyo')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">✨ Generar informe completo Klaviyo</button>
       </div>
 
       <div id="mkt-resumen" class="mkt-section" style="display:none">
@@ -296,30 +317,30 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         </div>
         <div class="card" style="margin-bottom:12px">
           <div class="card-header"><div class="card-title">&#128202; Performance por canal</div></div>
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:13px;font-weight:500">Google Ads</span><div style="flex:2;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:85%;height:100%;background:#3b82f6;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px">$180k</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500" class="metric-up">4.2x</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:13px;font-weight:500">Meta Ads</span><div style="flex:2;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:57%;height:100%;background:#6c63ff;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px">$95k</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500" class="metric-warn">3.1x</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:13px;font-weight:500">TikTok Ads</span><div style="flex:2;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:5%;height:100%;background:#ef4444;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px">Pausado</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500" class="metric-down">—</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:13px;font-weight:500">Klaviyo</span><div style="flex:2;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:18%;height:100%;background:#22c55e;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px">$18k rev.</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500" class="metric-up">Email</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:13px;font-weight:500">Google Ads</span><div style="flex:2;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:85%;height:100%;background:#3b82f6;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px">$180k</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500" class="metric-up">4.2x</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:13px;font-weight:500">Meta Ads</span><div style="flex:2;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:57%;height:100%;background:#6c63ff;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px">$95k</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500" class="metric-warn">3.1x</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:13px;font-weight:500">TikTok Ads</span><div style="flex:2;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:5%;height:100%;background:#ef4444;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px">Pausado</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500" class="metric-down">â</span></div><div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="flex:2;font-size:13px;font-weight:500">Klaviyo</span><div style="flex:2;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:18%;height:100%;background:#22c55e;border-radius:4px"></div></div><span style="flex:1;text-align:right;font-size:12px">$18k rev.</span><span style="flex:1;text-align:right;font-size:12px;font-weight:500" class="metric-up">Email</span></div>
         </div>
         <div style="background:var(--bg3);border-radius:8px;padding:1rem;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; Análisis IA — Vista general</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--red)">●</span> Urgente: TikTok pausado — resolver pago y redirigir $10k a Google hasta reactivación.</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--yellow)">●</span> Meta ROAS bajó a 3.1x — rotar creatividades. Si no mejora en 2 semanas, reducir 15%.</div>
-          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--green)">●</span> Google es el canal más eficiente — aumentar presupuesto en Brand Search y Basureros.</div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px">&#10024; AnÃ¡lisis IA â Vista general</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--red)">â</span> Urgente: TikTok pausado â resolver pago y redirigir $10k a Google hasta reactivaciÃ³n.</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--yellow)">â</span> Meta ROAS bajÃ³ a 3.1x â rotar creatividades. Si no mejora en 2 semanas, reducir 15%.</div>
+          <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--green)">â</span> Google es el canal mÃ¡s eficiente â aumentar presupuesto en Brand Search y Basureros.</div>
         </div>
-        <button onclick="if(window.showToast)showToast('Generando informe...','Conecta Supermetrics para datos reales')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">Generar informe ejecutivo completo</button>
+        <button onclick="openReport('resumen')" style="width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px">✨ Generar informe ejecutivo completo</button>
       </div>
     </div>
     <div class="page" id="page-ecommerce">
       <div class="topbar"><h1>Sitios web</h1></div>
       <div class="cards-grid">
-        <div class="card"><div class="card-header"><div class="card-title">ð metanek.cl</div><span class="status-pill pill-green">Online</span></div><div class="site-metrics" style="margin-bottom:10px"><div class="site-metric"><div class="sm-label">Velocidad</div><div class="sm-val metric-warn">2.8s</div></div><div class="site-metric"><div class="sm-label">SEO</div><div class="sm-val metric-up">84/100</div></div><div class="site-metric"><div class="sm-label">Mobile</div><div class="sm-val metric-up">91/100</div></div><div class="site-metric"><div class="sm-label">Productos</div><div class="sm-val">202</div></div></div><button class="card-btn" style="width:100%" onclick="window.open('https://www.metanek.cl','_blank')">Abrir â</button></div>
-        <div class="card"><div class="card-header"><div class="card-title">ð metahome.cl</div><span class="status-pill pill-yellow">Lento</span></div><div class="site-metrics" style="margin-bottom:10px"><div class="site-metric"><div class="sm-label">Velocidad</div><div class="sm-val metric-down">4.1s</div></div><div class="site-metric"><div class="sm-label">SEO</div><div class="sm-val metric-warn">71/100</div></div><div class="site-metric"><div class="sm-label">Mobile</div><div class="sm-val metric-warn">78/100</div></div><div class="site-metric"><div class="sm-label">Productos</div><div class="sm-val">â</div></div></div><button class="card-btn" style="width:100%" onclick="window.open('https://www.metahome.cl','_blank')">Abrir â</button></div>
+        <div class="card"><div class="card-header"><div class="card-title">Ã°ÂÂÂ metanek.cl</div><span class="status-pill pill-green">Online</span></div><div class="site-metrics" style="margin-bottom:10px"><div class="site-metric"><div class="sm-label">Velocidad</div><div class="sm-val metric-warn">2.8s</div></div><div class="site-metric"><div class="sm-label">SEO</div><div class="sm-val metric-up">84/100</div></div><div class="site-metric"><div class="sm-label">Mobile</div><div class="sm-val metric-up">91/100</div></div><div class="site-metric"><div class="sm-label">Productos</div><div class="sm-val">202</div></div></div><button class="card-btn" style="width:100%" onclick="window.open('https://www.metanek.cl','_blank')">Abrir Ã¢ÂÂ</button></div>
+        <div class="card"><div class="card-header"><div class="card-title">Ã°ÂÂÂ metahome.cl</div><span class="status-pill pill-yellow">Lento</span></div><div class="site-metrics" style="margin-bottom:10px"><div class="site-metric"><div class="sm-label">Velocidad</div><div class="sm-val metric-down">4.1s</div></div><div class="site-metric"><div class="sm-label">SEO</div><div class="sm-val metric-warn">71/100</div></div><div class="site-metric"><div class="sm-label">Mobile</div><div class="sm-val metric-warn">78/100</div></div><div class="site-metric"><div class="sm-label">Productos</div><div class="sm-val">Ã¢ÂÂ</div></div></div><button class="card-btn" style="width:100%" onclick="window.open('https://www.metahome.cl','_blank')">Abrir Ã¢ÂÂ</button></div>
       </div>
     </div>
     <div class="page" id="page-cambios">
-      <div class="topbar"><h1>Cambios en sitios web</h1><div style="display:flex;gap:8px"><span class="status-pill pill-green">â Email</span><span class="status-pill pill-green">â WhatsApp</span></div></div>
+      <div class="topbar"><h1>Cambios en sitios web</h1><div style="display:flex;gap:8px"><span class="status-pill pill-green">Ã¢ÂÂ Email</span><span class="status-pill pill-green">Ã¢ÂÂ WhatsApp</span></div></div>
       <div class="card">
-        <div class="card-header"><div class="card-title">ð Historial</div></div>
-        <div class="cambio-item cambio-warn"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500;color:var(--yellow)">metahome.cl â Inicio</span><span style="font-size:10px;color:var(--text3)">Hoy 10:42</span></div><div style="font-size:11px;color:var(--text2)">Banner modificado Â· agencia@marketing.cl</div></div>
-        <div class="cambio-item cambio-info"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500;color:var(--blue)">metanek.cl â SKU 1040213</span><span style="font-size:10px;color:var(--text3)">Ayer 16:15</span></div><div style="font-size:11px;color:var(--text2)">DescripciÃ³n actualizada Â· agencia@marketing.cl</div></div>
+        <div class="card-header"><div class="card-title">Ã°ÂÂÂ Historial</div></div>
+        <div class="cambio-item cambio-warn"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500;color:var(--yellow)">metahome.cl Ã¢ÂÂ Inicio</span><span style="font-size:10px;color:var(--text3)">Hoy 10:42</span></div><div style="font-size:11px;color:var(--text2)">Banner modificado ÃÂ· agencia@marketing.cl</div></div>
+        <div class="cambio-item cambio-info"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500;color:var(--blue)">metanek.cl Ã¢ÂÂ SKU 1040213</span><span style="font-size:10px;color:var(--text3)">Ayer 16:15</span></div><div style="font-size:11px;color:var(--text2)">DescripciÃÂ³n actualizada ÃÂ· agencia@marketing.cl</div></div>
       </div>
     </div>
   </main>
@@ -359,15 +380,15 @@ async function loadData(){
     const sum=arr=>(arr?.orders||[]).reduce((s,o)=>s+parseFloat(o.total_price||0),0);
     const mnH=sum(mnHoy),mnM=sum(mnMes),mhH=sum(mhHoy),mhM=sum(mhMes);
     document.getElementById('m-venta-hoy-mn').textContent=fmt(mnH);
-    document.getElementById('m-venta-hoy-mh').textContent=mhH>0?fmt(mhH):'â';
+    document.getElementById('m-venta-hoy-mh').textContent=mhH>0?fmt(mhH):'Ã¢ÂÂ';
     document.getElementById('v-mes-mn').textContent=fmt(mnM);
-    document.getElementById('v-mes-mh').textContent=mhM>0?fmt(mhM):'â';
+    document.getElementById('v-mes-mh').textContent=mhM>0?fmt(mhM):'Ã¢ÂÂ';
     document.getElementById('vp-hoy-mn').textContent=fmt(mnH);
     document.getElementById('vp-mes-mn').textContent=fmt(mnM);
-    document.getElementById('vp-hoy-mh').textContent=mhH>0?fmt(mhH):'â';
-    document.getElementById('vp-mes-mh').textContent=mhM>0?fmt(mhM):'â';
-    showToast('â Actualizado','Shopify conectado');
-  }catch(e){showToast('â  Error','No se pudo conectar');}
+    document.getElementById('vp-hoy-mh').textContent=mhH>0?fmt(mhH):'Ã¢ÂÂ';
+    document.getElementById('vp-mes-mh').textContent=mhM>0?fmt(mhM):'Ã¢ÂÂ';
+    showToast('Ã¢ÂÂ Actualizado','Shopify conectado');
+  }catch(e){showToast('Ã¢ÂÂ  Error','No se pudo conectar');}
 }
 
 function showMktTab(id, btn) {
@@ -377,14 +398,119 @@ function showMktTab(id, btn) {
   if(el) el.style.display = 'block';
   if(btn) btn.classList.add('active');
 }
+
+function openReport(platform, data) {
+  document.getElementById('report-modal').classList.add('open');
+  document.getElementById('report-title').textContent = 'Informe ' + platform + ' — ' + new Date().toLocaleDateString('es-CL');
+  document.getElementById('report-loading').style.display = 'flex';
+  document.getElementById('report-content').style.display = 'none';
+  document.getElementById('report-ftr').style.display = 'none';
+  document.getElementById('report-status').textContent = 'Analizando datos con IA...';
+  generateReport(platform, data);
+}
+function closeReport() {
+  document.getElementById('report-modal').classList.remove('open');
+}
+async function generateReport(platform, data) {
+  const prompts = {
+    google: `Eres un experto en Google Ads. Genera un informe ejecutivo completo en español para Metanek con estos datos:
+- Gasto mes: $180.000 | ROAS: 4.2x | CPC: $4.37 | Conversiones: 142 | CTR: 3.2%
+- Campañas: Basureros Search (ROAS 4.8x, $4.820), Estanterías Shopping (ROAS 3.9x, $3.410), Casilleros Display (ROAS 2.1x, $2.100), Brand Search (ROAS 6.1x, $2.070)
+- Comparativo: gasto +12%, ROAS +0.3x vs mes anterior
+Incluye: resumen ejecutivo, análisis por campaña, alertas, recomendaciones específicas (con números), proyección próximo mes. Formato claro con secciones.`,
+    meta: `Eres un experto en Meta Ads. Genera un informe ejecutivo completo en español para Metanek con estos datos:
+- Gasto mes: $95.000 | ROAS: 3.1x | CPM: $7.80 | Frecuencia: 2.4 | Conversiones: 89
+- Campañas: Catálogo Retargeting (ROAS 4.2x), Prospección Lookalike (ROAS 2.4x), Awareness Video (branding)
+- Alerta: ROAS bajó 0.2x, CPM subió $0.40 vs mes anterior
+Incluye: resumen ejecutivo, análisis por campaña, alertas de fatiga de audiencia, recomendaciones específicas, proyección próximo mes.`,
+    tiktok: `Eres un experto en TikTok Ads. Genera un plan de reactivación en español para Metahome con estos datos:
+- Estado actual: PAUSADO por pago pendiente
+- Último mes: gasto $42.000, ROAS 2.8x, 284k reproducciones, CTR 1.8%
+Incluye: impacto de la pausa, plan de reactivación paso a paso, estrategia de campañas recomendada, tipos de creatividades, proyección de ROAS objetivo.`,
+    klaviyo: `Eres un experto en email marketing. Genera un informe ejecutivo completo en español para Metahome con estos datos:
+- Suscriptores: 8.420 | Apertura: 24.3% | CTR: 3.8% | Baja: 0.4% | Revenue: $18.000/mes
+- Flows: Bienvenida (42.1% apertura), Carrito abandonado (38.4%), Post-compra (28.7%), Win-back (18.2% - bajo)
+Incluye: análisis de flows, recomendaciones para mejorar Win-back, segmentación sugerida, calendario de envíos, proyección de revenue.`,
+    resumen: `Eres un CMO experto. Genera un informe ejecutivo completo de marketing en español para Metanek con estos datos:
+- Google Ads: $180k, ROAS 4.2x ✅
+- Meta Ads: $95k, ROAS 3.1x ⚠ (bajando)
+- TikTok Ads: PAUSADO ❌
+- Klaviyo: $18k revenue, 24.3% apertura ✅
+- Total gasto: $335k | Revenue atribuido: $1.12M | ROAS global: 3.4x
+Incluye: resumen ejecutivo, performance por canal, alertas prioritarias, distribución óptima de presupuesto, recomendaciones para los próximos 30 días, KPIs objetivo.`
+  };
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        messages: [{role: 'user', content: prompts[platform] || prompts.resumen}]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || 'Error al generar el informe.';
+    // Format markdown-like text to HTML
+    let formatted = text
+      .replace(/## (.*)/g, '<h3>$1</h3>')
+      .replace(/### (.*)/g, '<h4>$1</h4>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/🔴 (.*)/g, '<p class="alert-red">🔴 $1</p>')
+      .replace(/🟡 (.*)/g, '<p class="alert-yellow">🟡 $1</p>')
+      .replace(/🟢 (.*)/g, '<p class="alert-green">🟢 $1</p>')
+      .replace(/- (.*)/g, '<li>$1</li>')
+      .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n/g, '<br>');
+    document.getElementById('report-content').innerHTML = formatted;
+    document.getElementById('report-loading').style.display = 'none';
+    document.getElementById('report-content').style.display = 'block';
+    document.getElementById('report-ftr').style.display = 'flex';
+  } catch(e) {
+    document.getElementById('report-status').textContent = 'Error: ' + e.message;
+  }
+}
+function printReport() {
+  const content = document.getElementById('report-content').innerHTML;
+  const title = document.getElementById('report-title').textContent;
+  const w = window.open('', '_blank');
+  w.document.write('<html><head><title>' + title + '</title><style>body{font-family:Arial,sans-serif;padding:2rem;max-width:800px;margin:0 auto;color:#111}h2{font-size:20px;margin-bottom:1rem}h3{font-size:16px;margin:1.5rem 0 .5rem}h4{font-size:14px;margin:1rem 0 .25rem}ul{padding-left:1.5rem}li{margin:.25rem 0}.alert-red{color:#c00}.alert-yellow{color:#b45309}.alert-green{color:#166534}@media print{body{padding:1rem}}</style></head><body><h2>' + title + '</h2>' + content + '</body></html>');
+  w.document.close();
+  setTimeout(() => w.print(), 500);
+}
+function copyReport() {
+  const text = document.getElementById('report-content').innerText;
+  navigator.clipboard.writeText(text).then(() => showToast('Copiado', 'Informe copiado al portapapeles'));
+}
 function initApp(){
   const now=new Date();
-  const dias=['Domingo','Lunes','Martes','MiÃ©rcoles','Jueves','Viernes','SÃ¡bado'];
+  const dias=['Domingo','Lunes','Martes','MiÃÂ©rcoles','Jueves','Viernes','SÃÂ¡bado'];
   const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   document.getElementById('fecha-hoy').textContent=dias[now.getDay()]+' '+now.getDate()+' de '+meses[now.getMonth()]+' '+now.getFullYear();
   loadData();
   showToast('Bienvenido','Panel cargado correctamente');
 }
 </script>
+
+<div class="report-modal" id="report-modal">
+  <div class="report-box">
+    <div class="report-hdr">
+      <h2 id="report-title">Informe de Marketing</h2>
+      <button class="report-close" onclick="closeReport()">&#10005;</button>
+    </div>
+    <div class="report-body" id="report-body">
+      <div class="report-loading" id="report-loading">
+        <div class="spinner"></div>
+        <span id="report-status">Analizando datos con IA...</span>
+      </div>
+      <div class="report-content" id="report-content" style="display:none"></div>
+    </div>
+    <div class="report-ftr" id="report-ftr" style="display:none">
+      <button class="report-copy-btn" onclick="copyReport()">Copiar texto</button>
+      <button class="report-print-btn" onclick="printReport()">Imprimir / Guardar PDF</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
